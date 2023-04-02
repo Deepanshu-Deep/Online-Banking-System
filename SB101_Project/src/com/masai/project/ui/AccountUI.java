@@ -1,0 +1,250 @@
+package com.masai.project.ui;
+
+import java.util.List;
+import java.util.Scanner;
+import java.util.function.Consumer;
+
+import com.masai.project.dao.AccountDAO;
+import com.masai.project.dao.AccountDAOimpl;
+import com.masai.project.dao.CustomerDAO;
+import com.masai.project.dao.CustomerDAOimpl;
+import com.masai.project.dto.AccountDTO;
+import com.masai.project.dto.AccountDTOimpl;
+import com.masai.project.dto.CustomerDTO;
+import com.masai.project.exception.NoRecordFoundException;
+import com.masai.project.exception.SomethingWentWrongException;
+
+public class AccountUI {
+
+public static void OpenAccountUI(Scanner sc){
+		
+		System.out.println("Enter the details below to Open Account");
+		
+		System.out.println("Enter the Customer Id :");
+		int cid = sc.nextInt();
+		
+		AccountDAO accountDAO = new AccountDAOimpl();
+		
+		try {
+			if(accountDAO.checkIfAccountExists(cid)){
+				System.out.println("Customer already has an account.");
+				return;
+			}
+			
+			System.out.println("Enter the Account Type (SAVINGS or LOAN) :");
+			String accType = sc.next(); 
+			
+			System.out.println("Enter the initial Amount :");
+			double amount = sc.nextDouble();
+			
+			System.out.println("Enter the Account Status( ACTIVE OR INOPERATIVE ) ");
+			String accStatus = sc.next(); 
+			
+			AccountDTO accountDTO = new AccountDTOimpl(accType, amount, cid, accStatus);
+			accountDAO.openAccount(accountDTO);
+			System.out.println("Account opened successfully.");
+			
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
+
+
+
+public static void depositMoneyUI(Scanner sc){
+    System.out.println("\n******Enter the account details to deposit money*****\n");
+    System.out.println("Enter the Account Number :");
+    int accNum = sc.nextInt();
+    AccountDAO accountDAO = new AccountDAOimpl();
+    try {
+        if(!accountDAO.checkIfAccountNumberExists(accNum)){
+            System.out.println("Account not Found.");
+            return;
+        }
+        System.out.println("Enter the Amount to deposit :");
+        double amount = sc.nextDouble();
+        double updatedBalance = accountDAO.depositMoney(accNum, amount);
+        System.out.println("Updated balance: " + updatedBalance);
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
+public static void withdrawalMoneyUI(Scanner sc){
+	
+    System.out.println("Enter the account to withdrawal money");
+	
+    System.out.println("Enter the Account Number :");
+    int accNum = sc.nextInt();
+	
+    AccountDAO accountDAO = new AccountDAOimpl();
+    try {
+        if(!accountDAO.checkIfAccountNumberExists(accNum)){
+            System.out.println("Account not Found.");
+            return;
+        }
+		
+        System.out.println("Enter the Amount to withdrawal :");
+        double amount = sc.nextDouble();
+		
+        double updatedBalance = accountDAO.withdrawalMoney(accNum, amount);
+        System.out.println("Updated balance: " + updatedBalance);
+		
+    } catch (Exception ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
+//*************************************************************************************************
+
+
+public static void closeAccount(Scanner sc){
+    
+	
+	System.out.println("\n******Enter the account number to close the account*****\n");
+    System.out.println("Enter the account number: ");
+    int accNumber = sc.nextInt();
+    
+    AccountDAO accountDAO = new AccountDAOimpl();
+    
+    try {
+        boolean isClosed = accountDAO.closeAccount(accNumber);
+        if (isClosed) {
+            System.out.println("Account closed successfully.");
+        } else {
+            System.out.println("Unable to close account.");
+        }
+    } catch (NoRecordFoundException ex) {
+        System.out.println(ex.getMessage());
+    } catch (SomethingWentWrongException ex) {
+        System.out.println(ex.getMessage());
+    }
+	
+}
+
+
+
+//***********************************************************************************
+
+public static void deleteAccountUI(Scanner sc) {
+    System.out.println("\n******Delete an account******\n");
+    
+    System.out.println("Enter the account number to delete: ");
+    int accNumber = sc.nextInt();
+    sc.nextLine();
+
+    AccountDAO accountDAO = new AccountDAOimpl();
+    try  {
+    	
+        accountDAO.deleteAccount(accNumber);
+        System.out.println("\nAccount deleted successfully.");
+        
+    } catch (NoRecordFoundException ex) {
+    	
+        System.out.println(ex.getMessage());
+        
+    } catch (SomethingWentWrongException ex) {
+    	
+        System.out.println(ex.getMessage());
+    }
+}
+
+//*************************************************************************************
+
+
+public static void getAllAccountDetails(Scanner sc) {
+    AccountDAO accountDAO = new AccountDAOimpl();
+    try {
+        List<AccountDTO> list = accountDAO.getAllAccounts();
+        System.out.println();
+        Consumer<AccountDTO> cun = res -> System.out.println("Account Number : "+ res.getAccountNumber() + ", Customer ID :"+ res.getCustomerId() + ", Account Type : "+ res.getAccountType() + ", Account Balance : "+ res.getBalance());
+        list.forEach(cun);
+        System.out.println();
+    } catch (SomethingWentWrongException | NoRecordFoundException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
+
+//*************************************************************************************
+
+
+public static void viewAccountDetailsByAccountNumber(Scanner sc) {
+	
+    System.out.println("Enter the Account Number");
+    
+    int accNumber = sc.nextInt();
+    
+    AccountDAO accountDAO = new AccountDAOimpl();
+    
+    try {
+    	
+        List<AccountDTO> list = accountDAO.viewAccountDetailsByAccountNumber(accNumber);
+       
+        System.out.println();
+        
+        Consumer<AccountDTO> cun = res -> System.out.println(" Account Number : "+ res.getAccountNumber() +
+        
+        		", Balance : "+ res.getBalance() + ", Account Type : "+ res.getAccountType());
+       
+        list.forEach(cun);
+        
+        System.out.println();
+        
+    } catch (SomethingWentWrongException | NoRecordFoundException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
+
+//************************************************************************************
+
+
+static void viewAllInoperativeAccounts() {
+    AccountDAO accountDAO = new AccountDAOimpl();
+    try {
+        List<AccountDTO> accounts = accountDAO.viewAllInoperativeAccounts();
+        System.out.println("Inoperative Accounts:");
+        for (AccountDTO account : accounts) {
+            System.out.println("Account Number: " + account.getAccountNumber() + 
+                               ", Balance: " + account.getBalance() + 
+                               ", Customer ID: " + account.getCustomerId());
+        }
+    } catch (SomethingWentWrongException | NoRecordFoundException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
+
+
+
+static void viewAllClosedAccounts() {
+    AccountDAO accountDAO = new AccountDAOimpl();
+    try {
+        List<AccountDTO> accounts = accountDAO.viewAllClosedAccounts();
+        System.out.println("Closed Accounts:");
+        for (AccountDTO account : accounts) {
+            System.out.println("Account Number: " + account.getAccountNumber() + 
+                               ", Balance: " + account.getBalance() + 
+                               ", Customer ID: " + account.getCustomerId());
+        }
+    } catch (SomethingWentWrongException | NoRecordFoundException ex) {
+        System.out.println(ex.getMessage());
+    }
+}
+
+
+
+
+
+
+
+	
+}
+	
