@@ -16,6 +16,8 @@ import com.masai.project.exception.SomethingWentWrongException;
 
 public class AccountUI {
 
+	
+// Open account 	
 public static void OpenAccountUI(Scanner sc){
 		
 		System.out.println("Enter the details below to Open Account");
@@ -51,7 +53,7 @@ public static void OpenAccountUI(Scanner sc){
 
 
 
-
+//Deposit Money
 public static void depositMoneyUI(Scanner sc){
     System.out.println("\n******Enter the account details to deposit money*****\n");
     System.out.println("Enter the Account Number :");
@@ -72,6 +74,8 @@ public static void depositMoneyUI(Scanner sc){
 }
 
 
+
+// Withdraw Money
 public static void withdrawalMoneyUI(Scanner sc){
 	
     System.out.println("Enter the account to withdrawal money");
@@ -129,6 +133,8 @@ public static void closeAccount(Scanner sc){
 
 //***********************************************************************************
 
+
+// Delete the user account
 public static void deleteAccountUI(Scanner sc) {
     System.out.println("\n******Delete an account******\n");
     
@@ -155,6 +161,8 @@ public static void deleteAccountUI(Scanner sc) {
 //*************************************************************************************
 
 
+
+// Get all account Details
 public static void getAllAccountDetails(Scanner sc) {
     AccountDAO accountDAO = new AccountDAOimpl();
     try {
@@ -172,7 +180,7 @@ public static void getAllAccountDetails(Scanner sc) {
 
 //*************************************************************************************
 
-
+// view Account Details By Account Number
 public static void viewAccountDetailsByAccountNumber(Scanner sc) {
 	
     System.out.println("Enter the Account Number");
@@ -202,42 +210,6 @@ public static void viewAccountDetailsByAccountNumber(Scanner sc) {
 
 
 
-//************************************************************************************
-
-
-static void viewAllInoperativeAccounts() {
-    AccountDAO accountDAO = new AccountDAOimpl();
-    try {
-        List<AccountDTO> accounts = accountDAO.viewAllInoperativeAccounts();
-        System.out.println("Inoperative Accounts:");
-        for (AccountDTO account : accounts) {
-            System.out.println("Account Number: " + account.getAccountNumber() + 
-                               ", Balance: " + account.getBalance() + 
-                               ", Customer ID: " + account.getCustomerId());
-        }
-    } catch (SomethingWentWrongException | NoRecordFoundException ex) {
-        System.out.println(ex.getMessage());
-    }
-}
-
-
-
-
-
-static void viewAllClosedAccounts() {
-    AccountDAO accountDAO = new AccountDAOimpl();
-    try {
-        List<AccountDTO> accounts = accountDAO.viewAllClosedAccounts();
-        System.out.println("Closed Accounts:");
-        for (AccountDTO account : accounts) {
-            System.out.println("Account Number: " + account.getAccountNumber() + 
-                               ", Balance: " + account.getBalance() + 
-                               ", Customer ID: " + account.getCustomerId());
-        }
-    } catch (SomethingWentWrongException | NoRecordFoundException ex) {
-        System.out.println(ex.getMessage());
-    }
-}
 
 
 

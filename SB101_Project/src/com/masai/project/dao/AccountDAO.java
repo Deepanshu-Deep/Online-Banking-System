@@ -26,9 +26,5 @@ public interface AccountDAO {
 
     public List<AccountDTO> viewAccountDetailsByAccountNumber(int accountNumber) throws SomethingWentWrongException, NoRecordFoundException;
 
-    public List<AccountDTO> viewAllInoperativeAccounts() throws SomethingWentWrongException, NoRecordFoundException;
-	
-    public List<AccountDTO> viewAllClosedAccounts() throws SomethingWentWrongException, NoRecordFoundException ;
-    
     
 }

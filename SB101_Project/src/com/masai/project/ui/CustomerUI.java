@@ -16,7 +16,7 @@ import com.masai.project.exception.SomethingWentWrongException;
 public class CustomerUI {
 
 	
-	
+// Register New Account	
 	public static void RegisterNewAccount(Scanner sc) {
 		
 		 System.out.println("\nPlease enter the following details to register for a new account:");
@@ -133,7 +133,7 @@ public class CustomerUI {
 	            return false;
 	        } else {
 	            System.out.println("Login successful");
-	            
+	           
 	            return true;
 	        }
 
@@ -145,7 +145,9 @@ public class CustomerUI {
 	}
 
 	
-	//
+//*************************************************************************************************	
+	
+	//Update Customer Details
 	static void updateCustomer(Scanner sc) {
 		
 		System.out.print("Enter customer id ");
@@ -173,6 +175,8 @@ public class CustomerUI {
 		}
 	}
 	
+	
+//*********************************************************************************************
 	
 	//Change password
 	
