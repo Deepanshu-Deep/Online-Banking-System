@@ -18,8 +18,6 @@ public interface AccountDAO {
 	public double depositMoney(int accNumber, double amount) throws SomethingWentWrongException, NoRecordFoundException; 
 	public double withdrawalMoney(int accNumber, double amount) throws SomethingWentWrongException, NoRecordFoundException, InsufficientBalanceException; 
 
-	public boolean closeAccount(int accNumber) throws SomethingWentWrongException, NoRecordFoundException;
-	
 	public boolean deleteAccount(int accountNumber) throws SomethingWentWrongException, NoRecordFoundException;
 	
     public List<AccountDTO> getAllAccounts() throws SomethingWentWrongException, NoRecordFoundException;

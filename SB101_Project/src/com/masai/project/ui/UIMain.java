@@ -89,7 +89,6 @@ public class UIMain {
         System.out.println("6. Deposit money");
         System.out.println("7. withdraw money");
         System.out.println("8. Transfer Money by account number");
-//        System.out.println("9. close the account");
         System.out.println("9. Delete the account");
     	System.out.println("10. Log Out");
         

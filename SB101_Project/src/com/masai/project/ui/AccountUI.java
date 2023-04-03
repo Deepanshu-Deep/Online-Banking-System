@@ -105,35 +105,6 @@ public static void withdrawalMoneyUI(Scanner sc){
 //*************************************************************************************************
 
 
-public static void closeAccount(Scanner sc){
-    
-	
-	System.out.println("\n******Enter the account number to close the account*****\n");
-    System.out.println("Enter the account number: ");
-    int accNumber = sc.nextInt();
-    
-    AccountDAO accountDAO = new AccountDAOimpl();
-    
-    try {
-        boolean isClosed = accountDAO.closeAccount(accNumber);
-        if (isClosed) {
-            System.out.println("Account closed successfully.");
-        } else {
-            System.out.println("Unable to close account.");
-        }
-    } catch (NoRecordFoundException ex) {
-        System.out.println(ex.getMessage());
-    } catch (SomethingWentWrongException ex) {
-        System.out.println(ex.getMessage());
-    }
-	
-}
-
-
-
-//***********************************************************************************
-
-
 // Delete the user account
 public static void deleteAccountUI(Scanner sc) {
     System.out.println("\n******Delete an account******\n");

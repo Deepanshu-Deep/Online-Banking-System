@@ -265,45 +265,8 @@ public class AccountDAOimpl implements AccountDAO{
 
 		
 		
-//*****************************************************************************
-	
 
-	//Close Account
-	public boolean closeAccount(int accNumber) throws SomethingWentWrongException, NoRecordFoundException {
-	    Connection conn = null;
 
-	    try {
-	        conn = DBUtils.getConnectionTodatabase();
-
-	        // check if account number exists
-	        if (!checkIfAccountNumberExists(accNumber)) {
-	        	
-	            throw new NoRecordFoundException("Account not found.");
-	        }
-
-	        // delete account record
-	        String query = "DELETE FROM account WHERE account_number = ?";
-	        PreparedStatement ps = conn.prepareStatement(query);
-	        ps.setInt(1, accNumber);
-	        int rowsAffected = ps.executeUpdate();
-
-	        // return true if account record is deleted successfully
-	        return rowsAffected > 0;
-
-	    }
-	    catch (ClassNotFoundException | SQLException ex) {
-	    	
-	        throw new SomethingWentWrongException("Unable to close account.");
-	        
-	    } finally {
-	    	
-	        try {
-	            DBUtils.closeConnection(conn);
-	        } catch (SQLException ex) {
-
-	        }
-	    }
-	}
 
 	
 //************************************************************************************
