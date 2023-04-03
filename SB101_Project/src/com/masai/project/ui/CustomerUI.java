@@ -62,23 +62,27 @@ public class CustomerUI {
 
 	
 	//View Customer Details
-	static void viewCustomerInformation() {
+	public static void viewCustomerInformation() {
 		
 		CustomerDAO customerDAO = new CustomerDAOimpl();
-		
+			
 		try {
-			
 			List<CustomerDTO> list = customerDAO.viewInformationAboutCustomer();
-			
-			System.out.println();
-			Consumer<CustomerDTO> cun = res -> System.out.println("Customer ID : "+ res.getCustomerId() + ", Customer Name : "+ res.getName() +
-					", Address : "+ res.getAddress() + ", Mobile Number : "+ res.getMobileNumber());;
-			
-			list.forEach(cun);
-			System.out.println();
+				
+			if (list.isEmpty()) {
+				System.out.println("No customer found");
+			} else {
+				System.out.println();
+				for (CustomerDTO customer : list) {
+					System.out.println("Customer ID: " + customer.getCustomerId() + ", Name: " + customer.getName() 
+						+ ", Mobile Number: " + customer.getMobileNumber() + ", Address: " + customer.getAddress() 
+						+ ", Username: " + customer.getUsername());
+				}
+				System.out.println();
+			}
+				
 		} catch (SomethingWentWrongException | NoRecordFoundException ex) {
-			System.out.println(ex.getMessage());
-			
+			System.out.println(ex.getMessage());		
 		}
 	}
 	

@@ -57,39 +57,40 @@ public class CustomerDAOimpl implements CustomerDAO{
 
 	//view Information About all Customer
 	@Override
-	public List<CustomerDTO> viewInformationAboutCustomer() throws SomethingWentWrongException, NoRecordFoundException{
-		
+public List<CustomerDTO> viewInformationAboutCustomer() throws SomethingWentWrongException, NoRecordFoundException {
 		
 		Connection conn = null;
 		List<CustomerDTO> list = new ArrayList<>();
+		
 		try {
-			
 			conn = DBUtils.getConnectionTodatabase();
 			
-			String query = "SELECT * FROM customer";
+			String query = "SELECT customer_id, name, mobile, address, username, password FROM customer WHERE is_deleted = 0";
 			
 			PreparedStatement ps = conn.prepareStatement(query);
 			ResultSet rs = ps.executeQuery();
 			
-			if(DBUtils.isResultSetEmpty(rs)) {
+			if (!rs.next()) {
 				throw new NoRecordFoundException("No customer found");
+			} else {
+				do {
+					list.add(new CustomerDTOimpl(rs.getInt("customer_id"), rs.getString("name"), rs.getString("mobile"), rs.getString("address"), rs.getString("username"), rs.getString("password")));
+				} while (rs.next());
 			}
-			while(rs.next()) {
 			
-				list.add(new CustomerDTOimpl(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4)));
-			}
-			
-		} catch(ClassNotFoundException | SQLException ex) {
-			throw new SomethingWentWrongException("Unable to add customer");
-		}finally {
+		} catch (ClassNotFoundException | SQLException ex) {
+			throw new SomethingWentWrongException("Unable to retrieve customer information");
+		} finally {
 			try {
 				DBUtils.closeConnection(conn);					
-			}catch(SQLException ex) {
-				
+			} catch (SQLException ex) {
+				// log the exception
 			}
 		}
-			return list;
+		
+		return list;
 	}
+
 	
 
 //***************************************************************************************************

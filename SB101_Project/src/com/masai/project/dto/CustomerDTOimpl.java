@@ -10,17 +10,7 @@ public class CustomerDTOimpl implements CustomerDTO{
 	String password;
 	
 	
-//	
-//	
-//	public CustomerDTOimpl( int customerId, String password) {
-//		super();
-//		this.customerId = customerId;
-//		this.password = password;
-//	}
 
-	
-	
-	
 
 	public CustomerDTOimpl(String username, String password) {
 		super();
