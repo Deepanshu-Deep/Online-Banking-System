@@ -8,6 +8,7 @@ import com.masai.project.exception.SomethingWentWrongException;
 
 public interface CustomerDAO {
 
+	boolean isCustomerIdExists(int customerId) throws SomethingWentWrongException;
 	public void newRegister(CustomerDTO reg) throws SomethingWentWrongException, NoRecordFoundException;
 	public List<CustomerDTO> viewInformationAboutCustomer() throws SomethingWentWrongException, NoRecordFoundException;
 	public List<CustomerDTO> viewCustomerDetailsById(int custId)throws SomethingWentWrongException,NoRecordFoundException;

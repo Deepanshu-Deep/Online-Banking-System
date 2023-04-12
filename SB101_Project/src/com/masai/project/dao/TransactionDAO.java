@@ -15,7 +15,6 @@ public interface TransactionDAO {
 	public double getAccountBalance(int accNumber) throws SomethingWentWrongException, NoRecordFoundException ;
 	public void transferMoney(int fromAccount, int toAccount, double amount) throws SomethingWentWrongException, NoRecordFoundException, InsufficientBalanceException;
 	
-//	 public List<TransactionDTO> getTransactionHistory(int accNumber, LocalDate startDate, LocalDate endDate) throws SomethingWentWrongException, NoRecordFoundException;
 
 	
 	

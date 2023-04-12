@@ -6,11 +6,8 @@ import java.util.function.Consumer;
 
 import com.masai.project.dao.AccountDAO;
 import com.masai.project.dao.AccountDAOimpl;
-import com.masai.project.dao.CustomerDAO;
-import com.masai.project.dao.CustomerDAOimpl;
 import com.masai.project.dto.AccountDTO;
 import com.masai.project.dto.AccountDTOimpl;
-import com.masai.project.dto.CustomerDTO;
 import com.masai.project.exception.NoRecordFoundException;
 import com.masai.project.exception.SomethingWentWrongException;
 
@@ -44,13 +41,15 @@ public static void OpenAccountUI(Scanner sc){
 			
 			AccountDTO accountDTO = new AccountDTOimpl(accType, amount, cid, accStatus);
 			accountDAO.openAccount(accountDTO);
-			System.out.println("Account opened successfully.");
+			
 			
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
 	}
 
+
+//***************************************************************************************************
 
 
 //Deposit Money
@@ -64,37 +63,39 @@ public static void depositMoneyUI(Scanner sc){
             System.out.println("Account not Found.");
             return;
         }
-        System.out.println("Enter the Amount to deposit :");
+        System.out.println("\nEnter the Amount to deposit :");
         double amount = sc.nextDouble();
         double updatedBalance = accountDAO.depositMoney(accNum, amount);
-        System.out.println("Updated balance: " + updatedBalance);
+        System.out.println("\nUpdated balance: " + updatedBalance);
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
     }
 }
 
 
+//*************************************************************************************************
+
 
 // Withdraw Money
 public static void withdrawalMoneyUI(Scanner sc){
 	
-    System.out.println("Enter the account to withdrawal money");
+    System.out.println("\nEnter the account to withdrawal money");
 	
-    System.out.println("Enter the Account Number :");
+    System.out.println("\nEnter the Account Number :");
     int accNum = sc.nextInt();
 	
     AccountDAO accountDAO = new AccountDAOimpl();
     try {
         if(!accountDAO.checkIfAccountNumberExists(accNum)){
-            System.out.println("Account not Found.");
+            System.out.println("\nAccount not Found.\n");
             return;
         }
 		
-        System.out.println("Enter the Amount to withdrawal :");
+        System.out.println("\nEnter the Amount to withdrawal :\n");
         double amount = sc.nextDouble();
 		
         double updatedBalance = accountDAO.withdrawalMoney(accNum, amount);
-        System.out.println("Updated balance: " + updatedBalance);
+        System.out.println("\nUpdated balance: " + updatedBalance);
 		
     } catch (Exception ex) {
         System.out.println(ex.getMessage());
@@ -129,7 +130,7 @@ public static void deleteAccountUI(Scanner sc) {
     }
 }
 
-//*************************************************************************************
+//***************************************************************************************************
 
 
 
@@ -149,7 +150,7 @@ public static void getAllAccountDetails(Scanner sc) {
 
 
 
-//*************************************************************************************
+//****************************************************************************************************
 
 // view Account Details By Account Number
 public static void viewAccountDetailsByAccountNumber(Scanner sc) {
@@ -168,7 +169,7 @@ public static void viewAccountDetailsByAccountNumber(Scanner sc) {
         
         Consumer<AccountDTO> cun = res -> System.out.println(" Account Number : "+ res.getAccountNumber() +
         
-        		", Balance : "+ res.getBalance() + ", Account Type : "+ res.getAccountType());
+        		", Balance : "+ res.getBalance() + ", Account Type : "+ res.getAccountType() + ", Customer Name : "+ res.getCustomerName());
        
         list.forEach(cun);
         

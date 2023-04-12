@@ -20,7 +20,7 @@ public class CustomerDTOimpl implements CustomerDTO{
 
 
 
-	public CustomerDTOimpl(int customerId, String name, String address, String mobileNumber, String username,
+	public CustomerDTOimpl(int customerId, String name, String mobileNumber, String address, String username,
 			String password) {
 		super();
 		this.customerId = customerId;

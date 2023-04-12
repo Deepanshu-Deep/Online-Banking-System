@@ -16,6 +16,41 @@ import com.masai.project.exception.SomethingWentWrongException;
 public class CustomerDAOimpl implements CustomerDAO{
 
 	
+// is customer ID exists	
+	 @Override
+	    public boolean isCustomerIdExists(int customerId) throws SomethingWentWrongException {
+		 
+	        Connection conn = null;
+	        
+	        try {
+	        	
+	            conn = DBUtils.getConnectionTodatabase();
+	            String query = "SELECT COUNT(*) as count FROM customer WHERE customer_id=?";
+	            PreparedStatement ps = conn.prepareStatement(query);
+	            ps.setInt(1, customerId);
+	            ResultSet rs = ps.executeQuery();
+	            rs.next();
+	            int count = rs.getInt("count");
+	            
+	            return count > 0;
+	            
+	        } catch (ClassNotFoundException | SQLException ex) {
+	        	
+	            throw new SomethingWentWrongException("Unable to check customer id");
+	            
+	        } finally {
+	        	
+	            try {
+	                DBUtils.closeConnection(conn);
+	            } catch (SQLException ex) {
+	                // handle exception
+	            }
+	        }
+	    }
+	
+
+	
+	
 	//For registering new Customer
 		public void newRegister(CustomerDTO reg) throws SomethingWentWrongException,NoRecordFoundException{
 			
@@ -51,10 +86,14 @@ public class CustomerDAOimpl implements CustomerDAO{
 				}
 			}	
 		}
+	
+	
 
 		
 //***************************************************************************************************
 
+		
+		
 	//view Information About all Customer
 	@Override
 public List<CustomerDTO> viewInformationAboutCustomer() throws SomethingWentWrongException, NoRecordFoundException {
@@ -75,6 +114,7 @@ public List<CustomerDTO> viewInformationAboutCustomer() throws SomethingWentWron
 			} else {
 				do {
 					list.add(new CustomerDTOimpl(rs.getInt("customer_id"), rs.getString("name"), rs.getString("mobile"), rs.getString("address"), rs.getString("username"), rs.getString("password")));
+
 				} while (rs.next());
 			}
 			
@@ -175,6 +215,8 @@ public List<CustomerDTO> viewInformationAboutCustomer() throws SomethingWentWron
 	
 //***************************************************************************************************
 
+	
+	//Update customer
 	public void UpdateCustomerDetails(CustomerDTO reg) throws SomethingWentWrongException, NoRecordFoundException{
 		
 		

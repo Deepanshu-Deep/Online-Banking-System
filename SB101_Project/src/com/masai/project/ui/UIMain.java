@@ -2,13 +2,9 @@ package com.masai.project.ui;
 
 import java.util.Scanner;
 
-import com.masai.project.dao.CustomerDAO;
-import com.masai.project.dao.TransactionDAO;
-import com.masai.project.dao.TransactionDAOimpl;
-import com.masai.project.dto.CustomerDTO;
-
 public class UIMain {
 
+	// method to display the Admin menu options
 	static void displayAdminMenu() {
 		
 			
@@ -20,6 +16,8 @@ public class UIMain {
 		
 	}
 	
+	
+	// method to handle the Admin menu options
 	static void adminMenu(Scanner sc) {
 		
 		int choice = 0;
@@ -44,7 +42,8 @@ public class UIMain {
 					AccountUI.viewAccountDetailsByAccountNumber(sc);;
 					break;
 				case 5:
-					System.out.println("Log Out admin");
+					System.out.println("Log Out admin successfully");
+					main(null);
 					break;
 				default:
 					System.out.println("Invalid Selection please try again later");
@@ -68,6 +67,7 @@ public class UIMain {
 		if(username.equalsIgnoreCase("admin") && password.equalsIgnoreCase("admin")) {
 			
 			System.out.println("Login Successfully");
+			System.out.println();
 			adminMenu(sc);
 		}
 		else {
@@ -76,25 +76,23 @@ public class UIMain {
 	}
 	
 	
-	
+	// method to display the User menu options
 	static void displayUserMenu() {
 		
 		System.out.println("\nPlease choose an option:");
 	
-        System.out.println("1. Register for a new account");
-        System.out.println("2. Login to an existing account");
-        System.out.println("3. Update account details");
-        System.out.println("4. change password");
-        System.out.println("5. Open account");
-        System.out.println("6. Deposit money");
-        System.out.println("7. withdraw money");
-        System.out.println("8. Transfer Money by account number");
-        System.out.println("9. Delete the account");
-    	System.out.println("10. Log Out");
+		System.out.println("1. Update account details");
+        System.out.println("2. change password");
+        System.out.println("3. Open account");
+        System.out.println("4. Deposit money");
+        System.out.println("5. withdraw money");
+        System.out.println("6. Transfer Money by account number");
+        System.out.println("7. Delete the account");
+    	System.out.println("8. Log Out");
         
         
 }
-	
+	// method to handle the user menu options
 static void UserMenu(Scanner sc) {
 
 		int choice = 0;
@@ -102,44 +100,39 @@ static void UserMenu(Scanner sc) {
 			
 			displayUserMenu();
 		
-			System.out.print("Enter Selection ");
+			System.out.print("\nEnter Selection ");
 			choice = sc.nextInt();
 			
 			switch(choice) {
 				case 1:
-					CustomerUI.RegisterNewAccount(sc);
-					break;
-				case 2:
-					CustomerUI.login(sc);
-					break;
-				case 3:
 					CustomerUI.updateCustomer(sc);
 					break;
-				case 4:
+				case 2:
 					CustomerUI.changePassword(sc);
 					break;
-				case 5:
+				case 3:
 					AccountUI.OpenAccountUI(sc);
 					break;
-				case 6:
+				case 4:
 					AccountUI.depositMoneyUI(sc);
 					break;
-				case 7:
+				case 5:
 					AccountUI.withdrawalMoneyUI(sc);
 					break;
-				case 8:
+				case 6:
 					TransactionUI.transferMoneyUI(sc);
 					break;
-			
-				case 9:
+				case 7:
 					AccountUI.deleteAccountUI(sc);
 					break;
-				case 10:
-					System.out.println("Log Out user");
+				
+				case 8:
+					System.out.println("\nLog Out successfully\n");
+					main(null);
 					break;
 				
 				default:
-					System.out.println("Invalid Selection please try again later");
+					System.out.println("Invalid Selection. Please enter a valid option.");
 			}
 			
 		}while(choice != 0);
@@ -147,47 +140,23 @@ static void UserMenu(Scanner sc) {
 		
 	}
 	
-	
-	
 
-
-
-
-
-	static void UserLogin(Scanner sc) {
-		 
-			System.out.println("Enter the Username : ");
-			String username = sc.next();
-			
-			System.out.println("Enter the Password");
-			String password = sc.next();
-			
-			if(username.equalsIgnoreCase("user") && password.equalsIgnoreCase("user")) {
-				
-				System.out.println("Login Successfully");
-				UserMenu(sc);
-			}
-			else {
-				System.out.println("Login failed. Please try again.");
-			}
-	}
-	
-	
-	
 	
 	
 	public static void main(String[] args) {
 
 		Scanner sc = new Scanner(System.in);
 		
-		System.out.println("Welcome to the Bank");		
+		System.out.println("\nWelcome to the Bank");		
 		
 		int choice = 0;
 		do {
 			System.out.println("\n****** Main Menu ******");
+			System.out.println();
 			System.out.println("1. login Admin");
-			System.out.println("2. login User");
-			System.out.println("3. Exit");
+			System.out.println("2. login Customer");
+			System.out.println("3. Register for new account");
+			
 			
 			System.out.println("\nEnter your choice:");
 			choice = sc.nextInt();
@@ -197,13 +166,14 @@ static void UserMenu(Scanner sc) {
 					AdminLogin(sc);
 					break;
 				case 2:
-					UserLogin(sc);
+					CustomerUI.login(sc);	
 					break;
 				case 3:
-					System.out.println("Bye Bye");
+					CustomerUI.RegisterNewAccount(sc);
 					break;
 				default:
-					System.out.println("Invalid choice. Please try again later");
+					
+					System.out.println("Invalid choice. Please enter a valid option.");
 			}
 			
 		}while(choice != 0);

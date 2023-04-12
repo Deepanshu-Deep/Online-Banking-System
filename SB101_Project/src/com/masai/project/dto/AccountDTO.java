@@ -3,6 +3,8 @@ package com.masai.project.dto;
 public interface AccountDTO {
 
 	
+	 public String getCustomerName();
+	 void setCustomerName(String customerName);
 	
 	public int getAccountNumber();
 	public void setAccountNumber(int accountNumber);

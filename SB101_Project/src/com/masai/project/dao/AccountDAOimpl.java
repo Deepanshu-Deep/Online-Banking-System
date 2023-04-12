@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-
 import com.masai.project.dto.AccountDTO;
 import com.masai.project.dto.AccountDTOimpl;
 import com.masai.project.exception.InsufficientBalanceException;
@@ -356,15 +355,17 @@ public class AccountDAOimpl implements AccountDAO{
 //**************************************************************************************
 	    
 	    
-	
+	        //view Account Details By Account Number
 	        @Override
 	        public List<AccountDTO> viewAccountDetailsByAccountNumber(int accountNumber) throws SomethingWentWrongException, NoRecordFoundException {
 	            Connection conn = null;
 	            List<AccountDTO> list = new ArrayList<>();
 	            try {
 	                conn = DBUtils.getConnectionTodatabase();
-	                String query = "SELECT account_number, balance, account_type FROM account WHERE account_number = ?";
+//	                String query = "SELECT account_number, balance, account_type FROM account WHERE account_number = ?";
 	                
+	                String query = "SELECT a.account_number, a.balance, a.account_type, c.name FROM account a INNER JOIN customer c ON a.customer_id = c.customer_id WHERE a.account_number = ?";
+
 	                PreparedStatement ps = conn.prepareStatement(query);
 	                
 	                ps.setInt(1, accountNumber);
@@ -380,6 +381,7 @@ public class AccountDAOimpl implements AccountDAO{
 	                    account.setAccountNumber(rs.getInt("account_number"));
 	                    account.setBalance(rs.getDouble("balance"));
 	                    account.setAccountType("account_type");
+	                    account.setCustomerName(rs.getString("name"));
 	                    
 	                    list.add(account);
 	                }

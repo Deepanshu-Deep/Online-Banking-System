@@ -9,11 +9,7 @@ public class AccountDTOimpl implements AccountDTO{
 	String accountStatus;
 	
 	
-//	
-//	
-//	public AccountDTOimpl() {
-//		super();
-//	}
+
 
 
 	public AccountDTOimpl(String accountType, double balance, int customerId, String accountStatus) {
@@ -36,25 +32,18 @@ public class AccountDTOimpl implements AccountDTO{
 
 	
 
-
-//	public AccountDTOimpl(int accountNumber2, String accountType2, double balance2, int customerId2) {
-//		// TODO Auto-generated constructor stub
-//	}
-
 	
 	
-//	public AccountDTOimpl(String accountType, double balance, int customerId, String accountStatus) {
-//	    super();
-//	    this.accountType = accountType;
-//	    this.balance = balance;
-//	    this.customerId = customerId;
-//	    this.accountStatus = accountStatus;
-//	}
-
-	
-	
-	
-	
+	// adding customer name 
+	 private String customerName;
+	    
+	 public String getCustomerName() {
+       return customerName;
+     }
+	    
+	    public void setCustomerName(String customerName) {
+	        this.customerName = customerName;
+	    }
 	
 
 	public AccountDTOimpl() {
