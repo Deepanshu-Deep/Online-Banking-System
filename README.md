@@ -29,4 +29,4 @@ This is an online banking system project that allows customers to create account
   * The database includes a field for is_deleted to mark records as deleted without actually deleting them.
 
 
-# THANK YOU FOR VISITING OUR PROJECT
+# THANK YOU FOR VISITING IN MY PROJECT
