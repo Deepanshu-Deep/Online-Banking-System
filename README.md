@@ -1,4 +1,4 @@
-# (BankEase) Online Banking System
+# Online Banking System
 
 Description : 
 
